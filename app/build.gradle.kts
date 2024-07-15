@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.geniusapk.videopro"
-        minSdk = 33
+        minSdk = 30
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -95,6 +95,15 @@ dependencies {
 
     //Permission
     implementation ("com.google.accompanist:accompanist-permissions:0.35.1-alpha")
+
+
+
+    //ExoPlayer
+
+    implementation("androidx.media3:media3-exoplayer:1.3.1")
+    implementation("androidx.media3:media3-exoplayer-dash:1.3.1")
+    implementation("androidx.media3:media3-ui:1.3.1")
+
 
 
 }
