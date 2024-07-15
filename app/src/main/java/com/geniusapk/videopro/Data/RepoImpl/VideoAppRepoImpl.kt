@@ -1,14 +1,22 @@
 package com.geniusapk.videopro.Data.RepoImpl
 
 import android.app.Application
+import android.content.ContentUris
+import android.media.ThumbnailUtils
 import android.provider.MediaStore
 import android.provider.MediaStore.Audio.Media
 import com.geniusapk.videopro.Data.model.VideoFile
 import com.geniusapk.videopro.Domain.Repo.VideoAppRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import java.io.File
 
 class VideoAppRepoImpl : VideoAppRepo {
-    fun getAllVideos(application: Application): ArrayList<VideoFile> {
+//   override fun getAllVideos(application: Application): ArrayList<VideoFile> {
+//
+//    }
+
+    override suspend fun getAllVideos(application: Application): Flow<ArrayList<VideoFile>> {
         val allVIdeo = ArrayList<VideoFile>()
 
         val projection = arrayOf(
@@ -18,7 +26,8 @@ class VideoAppRepoImpl : VideoAppRepo {
             MediaStore.Video.Media.SIZE,
             MediaStore.Video.Media.DATE_ADDED,
             MediaStore.Video.Media.DURATION,
-            MediaStore.Video.Media.DISPLAY_NAME
+            MediaStore.Video.Media.DISPLAY_NAME,
+
         )
         val Uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
 
@@ -33,6 +42,12 @@ class VideoAppRepoImpl : VideoAppRepo {
                 val duration = memoryCursor.getString(5)
                 val fileNames = memoryCursor.getString(6)
 
+                val contentUri = ContentUris.withAppendedId(
+                    MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                    id.toLong()
+
+                )
+
                 val videoFile = VideoFile(
                     id = id,
                     path = path,
@@ -40,8 +55,15 @@ class VideoAppRepoImpl : VideoAppRepo {
                     size = size,
                     dateAdded = dateAdded,
                     duration = duration,
-                    fileNames = fileNames
+                    fileNames = fileNames,
+                    thumbnailUri = contentUri.toString()
+
+
                 )
+
+
+
+
                 allVIdeo.add(videoFile)
                 if (memoryCursor.isLast) {
                     break
@@ -54,6 +76,14 @@ class VideoAppRepoImpl : VideoAppRepo {
 
 
         }
-        return allVIdeo
+        return flow {
+            emit(allVIdeo)
+        }
+
     }
+
+
+
+
+
 }

@@ -17,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.geniusapk.videopro.Presentation.ViewModels.viewModel
+import com.geniusapk.videopro.Presentation.ViewModels.MyViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -26,11 +26,15 @@ import com.google.accompanist.permissions.rememberPermissionState
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun App(
-    viewModel: viewModel = hiltViewModel(),
+    viewModel: MyViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
 
-    val mediaPermission = rememberPermissionState(permission = Manifest.permission.READ_MEDIA_VIDEO)
+    val mediaPermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        rememberPermissionState(permission = Manifest.permission.READ_MEDIA_VIDEO)
+    } else {
+        rememberPermissionState(permission = Manifest.permission.READ_EXTERNAL_STORAGE)
+    }
     val mediaPermissionLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission() ){
         if (it){
             viewModel.showUi.value = true
@@ -41,7 +45,13 @@ fun App(
     }
     LaunchedEffect(key1 = mediaPermission){
         if (!mediaPermission.status.isGranted){
-            mediaPermissionLauncher.launch(Manifest.permission.READ_MEDIA_VIDEO)
+            mediaPermissionLauncher.launch(
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    Manifest.permission.READ_MEDIA_VIDEO
+                } else {
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                }
+            )
 
         }else{
             viewModel.showUi.value = true
