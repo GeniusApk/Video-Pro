@@ -84,6 +84,7 @@ dependencies {
 
     // this is for coil
     implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation ("io.coil-kt:coil-video:2.4.0")
 
 
     // Navigation

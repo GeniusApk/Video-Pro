@@ -27,13 +27,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             VideoProTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(innerPadding)
-                    ) {
-                        Navigation()
-                    }
+
+                    Navigation()
                 }
             }
         }

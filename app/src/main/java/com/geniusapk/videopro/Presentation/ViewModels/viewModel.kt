@@ -17,7 +17,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyViewModel @Inject constructor( val repo: VideoAppRepo , val application: Application) : ViewModel() {
+class MyViewModel @Inject constructor(val repo: VideoAppRepo, val application: Application) :
+    ViewModel() {
     val showUi = MutableStateFlow(false)
 
     val VideoList = MutableStateFlow(emptyList<VideoFile>())
@@ -27,7 +28,7 @@ class MyViewModel @Inject constructor( val repo: VideoAppRepo , val application:
     suspend fun loadAllVideos() {
         isLoading.value = true
         viewModelScope.launch {
-             repo.getAllVideos(application).collectLatest {
+            repo.getAllVideos(application).collectLatest {
                 VideoList.value = it
             }
             Log.d("MyViewModel", "loadAllVideos: ${VideoList.value}")
@@ -48,7 +49,8 @@ class MyViewModel @Inject constructor( val repo: VideoAppRepo , val application:
     init {
         viewModelScope.launch {
             loadAllVideos()
-            loadVideosByFolder()        }
+            loadVideosByFolder()
+        }
 
 
     }

@@ -1,7 +1,6 @@
 package com.geniusapk.videopro.Presentation.Navigation
 
 import androidx.compose.runtime.Composable
-import androidx.media3.exoplayer.ExoPlayer
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,7 +29,7 @@ fun Navigation(
         composable<Routes.PlayerScreen>{
           //  PlayerScreen(navController)
             val videoUri : Routes.PlayerScreen = it.toRoute<Routes.PlayerScreen>()
-            ExoPlayerScreen(videoUri.VideoUri)
+            ExoPlayerScreen(videoUri.VideoUri , videoUri.title)
         }
         composable<Routes.FolderVideosScreen> {
             val folderName: Routes.FolderVideosScreen = it.toRoute()
