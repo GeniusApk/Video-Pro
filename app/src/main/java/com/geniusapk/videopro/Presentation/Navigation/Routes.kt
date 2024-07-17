@@ -13,5 +13,11 @@ sealed  class Routes {
     @Serializable
     data class  PlayerScreen(val VideoUri: String)
 
+    @Serializable
+    data class FolderVideosScreen(val folderName: String)
+
+    @Serializable
+    data class AllVideoFolder(val folderName: String)
+
 }
 

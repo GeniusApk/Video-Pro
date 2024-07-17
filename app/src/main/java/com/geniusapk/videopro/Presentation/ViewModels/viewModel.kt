@@ -22,6 +22,7 @@ class MyViewModel @Inject constructor( val repo: VideoAppRepo , val application:
 
     val VideoList = MutableStateFlow(emptyList<VideoFile>())
     val isLoading = mutableStateOf(false)
+    val videoFolders = MutableStateFlow(emptyMap<String, List<VideoFile>>())
 
     suspend fun loadAllVideos() {
         isLoading.value = true
@@ -34,10 +35,20 @@ class MyViewModel @Inject constructor( val repo: VideoAppRepo , val application:
         isLoading.value = false
     }
 
+    suspend fun loadVideosByFolder() {
+        isLoading.value = true
+        viewModelScope.launch {
+            repo.getVideosByFolder(application).collectLatest {
+                videoFolders.value = it
+            }
+        }
+        isLoading.value = false
+    }
+
     init {
         viewModelScope.launch {
             loadAllVideos()
-        }
+            loadVideosByFolder()        }
 
 
     }
