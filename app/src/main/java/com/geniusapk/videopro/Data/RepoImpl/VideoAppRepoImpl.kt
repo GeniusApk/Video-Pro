@@ -8,6 +8,7 @@ import android.provider.MediaStore.Audio.Media
 import com.geniusapk.videopro.Data.model.VideoFile
 import com.geniusapk.videopro.Domain.Repo.VideoAppRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import java.io.File
 
@@ -80,6 +81,13 @@ class VideoAppRepoImpl : VideoAppRepo {
             emit(allVIdeo)
         }
 
+    }
+    //test
+
+    override suspend fun getVideosByFolder(application: Application): Flow<Map<String, List<VideoFile>>> {
+        val allVideos = getAllVideos(application).first()
+        val videosByFolder = allVideos.groupBy { File(it.path).parentFile?.name ?: "Unknown" }
+        return flow { emit(videosByFolder) }
     }
 
 

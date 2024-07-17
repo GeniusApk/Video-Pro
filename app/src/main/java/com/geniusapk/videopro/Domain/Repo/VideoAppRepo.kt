@@ -8,6 +8,7 @@ interface VideoAppRepo {
 
    suspend fun getAllVideos(application: Application): Flow<ArrayList<VideoFile>>
    //te
-   //suspend fun getVideosByFolder(application: Application): Flow<Map<String, List<VideoFile>>>
+   suspend fun getVideosByFolder(application: Application): Flow<Map<String, List<VideoFile>>>
+
 
 }

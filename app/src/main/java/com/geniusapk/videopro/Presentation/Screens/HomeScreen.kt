@@ -83,7 +83,7 @@ fun HomeScreen(navController: NavController) {
 
 
             when (page) {
-                0 -> FolderVideoScreen(navController = navController)
+                0 -> AllVideoFolder(navController = navController )
                 1 -> AllVideoScreen(navController = navController)
                 // Add more screens as needed
             }

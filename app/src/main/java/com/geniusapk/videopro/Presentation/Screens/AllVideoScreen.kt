@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.geniusapk.videopro.Presentation.Navigation.Routes
 import com.geniusapk.videopro.Presentation.ViewModels.MyViewModel
+import com.geniusapk.videopro.Presentation.utils.videoCard
 
 @Composable
 fun AllVideoScreen(
@@ -48,38 +49,21 @@ fun AllVideoScreen(
             verticalArrangement = Arrangement.Center
         ) {
             items(allVideos) {
-                Card(
-                    modifier = Modifier.clickable {
-                        navController.navigate(Routes.PlayerScreen(it.path))
+                videoCard(
+                    path = it.path,
+                    title = it.title ?: "Untitled",
+                    size = it.size ?: "Unknown",
+                    duration = it.duration ?: "Unknown",
+                    dateAdded = it.dateAdded ?: "Unknown",
+                    fileNames = it.fileNames ?: "Unknown",
+                    thumbnail = it.thumbnailUri ?: "Unknown",
+                    id = it.id ?: "Unknown",
+                    navController = navController,
 
-                    },
                 )
-                {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        // Thumbnail
-                        AsyncImage(
-                            model = it.thumbnailUri,
-                            contentDescription = "Video thumbnail",
-                            modifier = Modifier
-                                .size(64.dp)
-                                .padding(end = 16.dp)
-                        )
-
-                        // Video details
-                        Column {
-                            Text(text = it.title ?: "Untitled")
-                            Text(text = "Duration: ${it.duration}")
-                            Text(text = "Size: ${it.size}")
-                            Text(text = "Added: ${it.dateAdded}")
-                        }
-                    }
-                }
             }
         }
+
+
     }
 }
