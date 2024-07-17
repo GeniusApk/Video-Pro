@@ -11,7 +11,7 @@ sealed  class Routes {
     object HomeScreen
 
     @Serializable
-    data class  PlayerScreen(val VideoUri: String)
+    data class  PlayerScreen(val VideoUri: String , val title: String? = null)
 
     @Serializable
     data class FolderVideosScreen(val folderName: String)
