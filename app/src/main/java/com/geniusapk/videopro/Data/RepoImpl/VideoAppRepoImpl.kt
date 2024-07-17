@@ -29,7 +29,7 @@ class VideoAppRepoImpl : VideoAppRepo {
             MediaStore.Video.Media.DURATION,
             MediaStore.Video.Media.DISPLAY_NAME,
 
-        )
+            )
         val Uri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
 
         val memoryCursor = application.contentResolver.query(Uri, projection, null, null, null)
@@ -74,8 +74,6 @@ class VideoAppRepoImpl : VideoAppRepo {
             memoryCursor.close()
 
 
-
-
         }
         return flow {
             emit(allVIdeo)
@@ -89,9 +87,6 @@ class VideoAppRepoImpl : VideoAppRepo {
         val videosByFolder = allVideos.groupBy { File(it.path).parentFile?.name ?: "Unknown" }
         return flow { emit(videosByFolder) }
     }
-
-
-
 
 
 }
