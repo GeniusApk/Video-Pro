@@ -3,7 +3,7 @@ package com.geniusapk.videopro.Data.model
 import android.graphics.Bitmap
 import android.net.Uri
 
-data class VideoFile (
+data class VideoFile(
 
 
     var id: String?,
@@ -16,8 +16,6 @@ data class VideoFile (
     var thumbnailUri: String? = null
 
 
-
-
-    )
+)
 
 

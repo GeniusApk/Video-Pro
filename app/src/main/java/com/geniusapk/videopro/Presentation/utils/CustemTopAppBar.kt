@@ -7,6 +7,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 
@@ -29,14 +31,3 @@ fun CustemTopAppBar(
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CustemTopAppBar(
-    topAppBarText: String,
-
-) {
-    TopAppBar(
-        title = { Text(topAppBarText) },
-
-    )
-}

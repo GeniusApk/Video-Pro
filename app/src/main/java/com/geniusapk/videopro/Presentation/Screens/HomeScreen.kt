@@ -21,34 +21,52 @@ import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.Folder
 import androidx.compose.material.icons.outlined.VideoLibrary
 import androidx.compose.material.icons.outlined.ViewList
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.geniusapk.videopro.Presentation.utils.CustemTopAppBar
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
+
     val tabs = listOf(
         TabItem("Folder", Icons.Default.Folder , fillrdIcon = Icons.Outlined.Folder),
         TabItem("All Videos", Icons.Default.VideoLibrary, Icons.Outlined.VideoLibrary)
     )
     val pagerState = rememberPagerState(pageCount = { tabs.size })
     val scope = rememberCoroutineScope()
+    var scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
 
     Scaffold(
-        topBar = {CustemTopAppBar(topAppBarText = "Video Pro")}
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            TopAppBar(
+                title = { Text("Video Pro")
+                },
+                scrollBehavior = scrollBehavior
+            )
+
+        }
     ) {innerPadding ->
 
         Column(
